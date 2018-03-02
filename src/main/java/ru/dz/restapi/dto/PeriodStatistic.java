@@ -1,4 +1,4 @@
-package ru.dz.restapi.web.dto;
+package ru.dz.restapi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

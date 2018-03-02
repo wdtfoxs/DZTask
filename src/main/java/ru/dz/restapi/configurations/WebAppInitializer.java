@@ -1,6 +1,9 @@
 package ru.dz.restapi.configurations;
 
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.FrameworkServlet;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 import ru.dz.restapi.configurations.root.ApplicationConfig;
 import ru.dz.restapi.configurations.root.servlet.WebConfig;
@@ -37,5 +40,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     public void onStartup(ServletContext servletContext) throws ServletException {
         super.onStartup(servletContext);
         servletContext.setInitParameter("spring.profiles.active", "dev");
+    }
+
+    @Override
+    protected FrameworkServlet createDispatcherServlet(WebApplicationContext servletAppContext) {
+        DispatcherServlet dispatcherServlet = new DispatcherServlet(servletAppContext);
+        dispatcherServlet.setThrowExceptionIfNoHandlerFound(true);
+        return dispatcherServlet;
     }
 }

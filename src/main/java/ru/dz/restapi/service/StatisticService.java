@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import ru.dz.restapi.dao.StatisticDao;
-import ru.dz.restapi.web.dto.PeriodStatistic;
-import ru.dz.restapi.web.dto.TodayStatistic;
+import ru.dz.restapi.dto.PeriodStatistic;
+import ru.dz.restapi.dto.TodayStatistic;
 
 import java.time.LocalDate;
 
