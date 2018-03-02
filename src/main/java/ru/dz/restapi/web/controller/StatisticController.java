@@ -25,7 +25,8 @@ public class StatisticController {
      * @param path - Path of the site
      * @return {@link TodayStatistic}
      */
-    @PostMapping(value = "/record", params = {"user", "path"})
+    //get method for convenience
+    @GetMapping(value = "/record", params = {"user", "path"})
     public ResponseEntity<TodayStatistic> record(@RequestParam Long user,
                                                  @RequestParam String path){
 
