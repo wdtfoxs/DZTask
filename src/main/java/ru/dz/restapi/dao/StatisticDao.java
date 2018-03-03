@@ -37,11 +37,10 @@ public class StatisticDao {
 
     public PeriodStatistic periodStatistic(LocalDate from, LocalDate to) {
         String PERIOD_STATISTIC =
-                "SELECT sum(count_visit) AS all_visits, count(DISTINCT user_id) AS unique_visits, " +
-                        "(SELECT count(cnt) AS cnt FROM " +
-                        "   (SELECT count(user_id) AS cnt FROM user_statistic " +
-                        "       WHERE (:from::DATE IS NULL  OR date >= :from) AND (:to::DATE IS NULL OR date <= :to) GROUP BY user_id) AS res WHERE cnt >= 10) AS permanent_visitors " +
-                        "           FROM user_statistic WHERE (:from::DATE IS NULL  OR date >= :from) AND (:to::DATE IS NULL OR date <= :to)";
+                "WITH result AS (SELECT sum(count_visit) AS cnt, user_id AS users, count(DISTINCT user_id) AS pages FROM user_statistic " +
+                        "WHERE (:from::DATE IS NULL  OR date >= :from) AND (:to::DATE IS NULL OR date <= :to) GROUP BY user_id) " +
+                        "SELECT coalesce(sum(cnt), 0)  AS all_visits, count(*) AS unique_visits, " +
+                        "   (SELECT count(*) FROM result WHERE pages >=10) AS permanent_visitors FROM result;";
         HashMap<String, Object> map = new HashMap<>();
         map.put("from", from);
         map.put("to", to);
